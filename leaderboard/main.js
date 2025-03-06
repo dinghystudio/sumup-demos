@@ -57,9 +57,12 @@ function animateCount(element, duration = 2000) {
     const easedProgress = ease(linearProgress);
 
     // Calculate current display value based on eased progress
-    const displayValue = isUpValue
-      ? (startValue + easedProgress * (currentValue - startValue)).toFixed(3)
-      : Math.floor(startValue + easedProgress * (currentValue - startValue));
+    const currentNumber =
+      startValue + easedProgress * (currentValue - startValue);
+    const displayValue =
+      linearProgress === 1
+        ? Math.round(currentNumber)
+        : currentNumber.toFixed(0);
 
     element.textContent = isUpValue ? `${displayValue} UP` : displayValue;
 
@@ -80,7 +83,9 @@ function animateCount(element, duration = 2000) {
       requestAnimationFrame(animate);
     } else {
       // Ensure we end with exactly the target value
-      element.textContent = isUpValue ? `${currentValue} UP` : currentValue;
+      element.textContent = isUpValue
+        ? `${Math.round(currentValue)} UP`
+        : Math.round(currentValue);
 
       // Final overall progress
       const finalProgress = (currentValue / maxValue) * 100;

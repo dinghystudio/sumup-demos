@@ -67,6 +67,7 @@
       z-index: -1;
       content: "";
       background-color: var(--promo-light);
+      background-image: linear-gradient(to right, white, transparent);
       inset: 0;
       position: absolute;
       scale: var(--count-progress, 0%) 1;
@@ -272,7 +273,6 @@
     transform-origin: 0 0;
     transition: scale 350ms;
     z-index: -1;
-    border-radius: var(--cui-border-radius-kilo);
   }
 }
 
@@ -293,4 +293,5 @@
   font-size: var(--cui-body-s-font-size);
   color: var(--cui-fg-subtle);
   border-radius: var(--cui-border-radius-byte);
+  font-variant-numeric: tabular-nums;
 }
