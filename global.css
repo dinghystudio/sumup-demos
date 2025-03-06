@@ -1,7 +1,10 @@
+@import "@sumup-oss/design-tokens/light.css";
+@import "@sumup-oss/design-tokens/fonts.css";
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: var(--cui-font-stack-default);
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: var(--cui-font-weight-regular);
 
   /* color-scheme: light dark; */
   /* color: rgba(255, 255, 255, 0.87); */

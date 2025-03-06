@@ -2,8 +2,9 @@
   --gold: #ffcc00;
   --silver: #c4ccd6;
   --bronze: #e9902a;
-  --purple: #9e33e0;
-  --purple-light: color-mix(in srgb, var(--purple), transparent 90%);
+  --promo: var(--cui-bg-promo-strong);
+  --promo-light: color-mix(in srgb, var(--promo), transparent 90%);
+  --gray: #aeb6be;
 }
 
 @keyframes jump {
@@ -41,6 +42,8 @@
   display: grid;
   gap: 1rem;
   padding: 1rem;
+  max-inline-size: 32rem;
+  margin-inline: auto;
 }
 
 .headline {
@@ -49,14 +52,12 @@
 }
 
 .league-info {
-  max-width: 32rem;
-
   div {
     overflow: clip;
     position: relative;
-    padding: 0.5rem;
-    border-radius: 0.75rem;
-    border: 1px solid var(--purple);
+    padding: var(--cui-spacings-kilo);
+    border-radius: var(--cui-border-radius-kilo);
+    border: 1px solid var(--promo);
 
     display: grid;
     gap: 0.5rem;
@@ -65,7 +66,7 @@
     &::after {
       z-index: -1;
       content: "";
-      background-color: var(--purple-light);
+      background-color: var(--promo-light);
       inset: 0;
       position: absolute;
       scale: var(--count-progress, 0%) 1;
@@ -98,8 +99,8 @@
     width: 2.5ch;
     text-align: center;
     display: inline-block;
-    background-color: var(--purple);
-    border-radius: 0.25em;
+    background-color: var(--promo);
+    border-radius: var(--cui-border-radius-bit);
     color: white;
   }
 }
@@ -178,4 +179,57 @@
 .next-update {
   opacity: 0.75;
   text-align: center;
+  font-size: var(--cui-compact-s-font-size);
+}
+
+/* Details Accordion */
+
+.accordion {
+  --duration: 250ms;
+
+  border: 1px solid var(--cui-border-normal);
+  border-radius: var(--cui-border-radius-kilo);
+  padding: var(--cui-spacings-kilo);
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+
+  svg {
+    width: 1.5rem;
+    aspect-ratio: 1;
+    opacity: 0.75;
+    rotate: 90deg;
+    transition: rotate 250ms;
+  }
+
+  &[open] svg {
+    rotate: 0deg;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    interpolate-size: allow-keywords;
+  }
+
+  &::details-content {
+    opacity: 0;
+    block-size: 0;
+    overflow-y: clip;
+    transition: content-visibility var(--duration, 250ms) allow-discrete,
+      opacity var(--duration, 250ms), block-size var(--duration, 250ms);
+  }
+
+  ol {
+    margin-block: 0;
+    padding-block: var(--cui-spacings-kilo);
+  }
+
+  &[open]::details-content {
+    opacity: 1;
+    block-size: auto;
+  }
 }
