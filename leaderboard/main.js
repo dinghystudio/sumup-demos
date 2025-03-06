@@ -1,10 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
   const countElement = document.querySelector(".count-number");
   const coinElement = document.querySelector(".coin");
+  const upValueElements = document.querySelectorAll(".up-value");
 
   // Count Animation
   setTimeout(() => {
     animateCount(countElement);
+
+    // Animate UP values with staggered delay
+    upValueElements.forEach((element, index) => {
+      setTimeout(() => {
+        animateCount(element);
+      }, 1000 + index * 100);
+    });
   }, 1000);
 
   // Remove classes when animations end
@@ -19,14 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function animateCount(element, duration = 2000) {
-  // Get current and max values from data attributes
-  const currentValue = parseInt(element.dataset.current, 10);
-  const maxValue = parseInt(element.dataset.max, 10);
-  // Start value is what's currently in the element
-  const startValue = parseInt(element.textContent, 10);
+  if (!element) return;
 
-  // Find the parent with class "league-info"
-  const parentElement = element.closest(".league-info");
+  // Get current and max values from data attributes
+  const isUpValue = element.classList.contains("up-value");
+  const currentValue = parseFloat(element.dataset.current);
+  const maxValue = parseFloat(element.dataset.max);
+  const startValue = 0;
+
+  // Find the parent element
+  const parentElement = element.closest(".league-info, li");
 
   // Track animation progress
   let startTime = null;
@@ -47,12 +57,13 @@ function animateCount(element, duration = 2000) {
     const easedProgress = ease(linearProgress);
 
     // Calculate current display value based on eased progress
-    const displayValue = Math.floor(
-      startValue + easedProgress * (currentValue - startValue)
-    );
-    element.textContent = displayValue;
+    const displayValue = isUpValue
+      ? (startValue + easedProgress * (currentValue - startValue)).toFixed(3)
+      : Math.floor(startValue + easedProgress * (currentValue - startValue));
 
-    // Use the raw eased progress for a smoother progress bar animation
+    element.textContent = isUpValue ? `${displayValue} UP` : displayValue;
+
+    // Calculate and update progress
     const smoothProgress =
       startValue / maxValue +
       easedProgress * ((currentValue - startValue) / maxValue);
@@ -69,7 +80,8 @@ function animateCount(element, duration = 2000) {
       requestAnimationFrame(animate);
     } else {
       // Ensure we end with exactly the target value
-      element.textContent = currentValue;
+      element.textContent = isUpValue ? `${currentValue} UP` : currentValue;
+
       // Final overall progress
       const finalProgress = (currentValue / maxValue) * 100;
       if (parentElement) {
