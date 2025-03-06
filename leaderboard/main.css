@@ -157,7 +157,7 @@
   svg {
     aspect-ratio: 1;
     opacity: 0.75;
-    fill: color-mix(in srgb, var(--coin-color), black 15%);
+    color: color-mix(in srgb, var(--coin-color), black 15%);
   }
 
   &[data-variant="silver"] {
