@@ -1,3 +1,5 @@
+import "./main.css";
+
 document.addEventListener("DOMContentLoaded", () => {
   const countElement = document.querySelector(".count-number");
   const coinElement = document.querySelector(".coin");
